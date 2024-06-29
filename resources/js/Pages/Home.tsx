@@ -1,8 +1,8 @@
-import { Link, Head } from '@inertiajs/react';
+import { Head } from '@inertiajs/react';
 import Layout from "@/Layouts/Layout";
 import {PageProps} from "@/types";
-import {useEffect, useState} from "react";
 import GreetingText from "@/Components/GreetingText";
+import {useState} from "react";
 
 function Home({ auth, laravelVersion, phpVersion }: PageProps<{ laravelVersion: string, phpVersion: string }>) {
     const [showContent, setShowContent] = useState(false);
