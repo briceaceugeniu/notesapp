@@ -1,18 +1,22 @@
 <?php
-
+use App\Http\Controllers\NoteController;
 use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('Home', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    return Inertia::render('Home');
 })->name('home');
+
+Route::prefix('notes')->controller(NoteController::class)->group(function () {
+    Route::get('/', 'index')->name('notes.index');
+    Route::get('/create', 'create')->name('notes.create')->middleware('auth');
+    Route::post('/create', 'store')->name('notes.store')->middleware('auth');
+    Route::get('/{note}', 'show')->name('notes.show');
+    Route::get('/{note}/edit', 'edit')->name('notes.edit')->middleware('auth');
+    Route::patch('/{note}', 'update')->name('notes.update')->middleware('auth');
+    Route::delete('/{note}', 'destroy')->name('notes.delete')->middleware('auth');
+});
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

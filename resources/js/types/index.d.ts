@@ -7,6 +7,18 @@ export interface User {
     email_verified_at: string;
 }
 
+export interface Tag {
+    id: number;
+    name: string;
+}
+
+export interface Note {
+    id: number;
+    title: string;
+    content: string;
+    favorite: boolean;
+}
+
 export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & {
     auth: {
         user: User;

@@ -47,7 +47,7 @@ const TypingEffect = () => {
     return (
         <div>
             <div className="w-full h-6 flex items-center">
-                <h4 className="text-xl font-mono font-bold bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text">
+                <h4 className="lg:text-xl text-base font-mono font-bold bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text">
                     This is <span>{currentText}</span>
                 </h4><span>{emoji}</span>
             </div>

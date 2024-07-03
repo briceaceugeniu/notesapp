@@ -4,7 +4,7 @@ import {PageProps} from "@/types";
 import GreetingText from "@/Components/GreetingText";
 import {useState} from "react";
 
-function Home({ auth, laravelVersion, phpVersion }: PageProps<{ laravelVersion: string, phpVersion: string }>) {
+function Home({ auth }: PageProps) {
     const [showContent, setShowContent] = useState(false);
 
     function handleShowContent() {
@@ -83,7 +83,7 @@ function Home({ auth, laravelVersion, phpVersion }: PageProps<{ laravelVersion: 
                             <div className="row-span-1 sm:row-span-1 md:row-span-2 col-span-1 sm:col-span-2 md:col-span-2 p-2 shadow bg-ct2">
                                 <h4 className="text-lg font-mono font-bold">Favorite Notes</h4>
                                 <div className="text-gray-500 dark:text-neutral-400 font-mono">
-                                    In progress..
+                                    Your advertisement could be placed here!
                                 </div>
                             </div>
                         </div>

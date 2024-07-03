@@ -25,7 +25,10 @@ const Layout = ({user, header, children}: PropsWithChildren<{header?: ReactNode,
                             </Link>
                             <div className="hidden md:block">
                                 <div className="ml-10 flex items-baseline space-x-4">
-                                    <NavLink href={route('home')} active={route().current('dashboard')}>
+                                    <NavLink
+                                        href={route('notes.index')}
+                                        active={route().current('notes.*')}
+                                    >
                                         Notes
                                     </NavLink>
                                     <NavLink href={route('home')} active={route().current('dashboard')}>
@@ -87,13 +90,16 @@ const Layout = ({user, header, children}: PropsWithChildren<{header?: ReactNode,
 
                 <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
                     <div className="flex flex-col items-center justify-between">
-                        <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
+                        <ResponsiveNavLink
+                            href={route('notes.index')}
+                            active={route().current('notes.*')}
+                        >
                             Notes
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
+                        <ResponsiveNavLink href={route('home')} active={route().current('dashboard')}>
                             Hall of Fame
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
+                        <ResponsiveNavLink href={route('home')} active={route().current('dashboard')}>
                             Contact
                         </ResponsiveNavLink>
                     </div>
