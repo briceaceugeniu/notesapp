@@ -10,6 +10,8 @@ export default {
         './resources/js/**/*.tsx',
     ],
 
+    darkMode: ['selector', '[data-mode="dark"]'],
+
     theme: {
         extend: {
             height: {
