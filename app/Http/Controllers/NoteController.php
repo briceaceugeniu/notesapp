@@ -32,7 +32,7 @@ class NoteController extends Controller
         $notes = $notesQuery->simplePaginate(10);
 
         return Inertia::render('Note/Index', [
-            'notes' => $notes,
+            'notes' => $notes->items(),
             'tags' => $tags,
             'filterTags' => array_keys($filterTags)
         ]);
@@ -40,6 +40,26 @@ class NoteController extends Controller
 
     public function create()
     {
-        return Inertia::render('Note/Create');
+        $tags = Tag::all();
+        return Inertia::render('Note/Create', ['tags' => $tags]);
+    }
+
+    public function store()
+    {
+        request()->validate([
+            'title' => ['required', 'min:3', 'max:255'],
+            'content' => ['required'],
+            'tags' => ['required', 'array']
+        ]);
+
+        $note = Note::create([
+            'title' => request('title'),
+            'content' => request('content'),
+        ]);
+
+        $note->tags()->attach(request('tags'));
+
+        $tags = Tag::all();
+        return to_route('notes.index', ['tags' => $tags]);
     }
 }
