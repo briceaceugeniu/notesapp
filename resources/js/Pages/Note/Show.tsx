@@ -3,6 +3,7 @@ import { Note, PageProps } from "@/types";
 import { Head } from "@inertiajs/react";
 import Layout from "@/Layouts/Layout";
 import MarkdownEditor from "@uiw/react-markdown-editor";
+import NoteTags from "@/Pages/Note/Partials/NoteTags";
 
 const Show = ({ auth, note }: PageProps<{ note: Note }>) => {
     return (
@@ -17,16 +18,7 @@ const Show = ({ auth, note }: PageProps<{ note: Note }>) => {
                 }
             >
                 <div className="py-4 shadow p-2 bg-ct2">
-                    {note.tags &&
-                        note.tags.map((tag: any) => (
-                            <span
-                                key={tag.id}
-                                className="inline-flex items-center rounded-md bg-purple-50 px-2 py-1
-                                        text-xs font-medium text-purple-700 ring-1 ring-inset ring-purple-700/10"
-                            >
-                                {tag.name}
-                            </span>
-                        ))}
+                    <NoteTags tags={note.tags} />
                     <div className="max-w-screen-2xl mx-auto sm:px-4 lg:px-6 mt-2">
                         <MarkdownEditor.Markdown
                             source={note.content}

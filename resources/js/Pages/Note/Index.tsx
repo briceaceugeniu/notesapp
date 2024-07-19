@@ -3,6 +3,7 @@ import { Head, Link } from "@inertiajs/react";
 import Layout from "@/Layouts/Layout";
 import { Note, PageProps, Tag } from "@/types";
 import Header from "@/Pages/Note/Partials/Header";
+import NoteTags from "@/Pages/Note/Partials/NoteTags";
 
 const Index = ({
     auth,
@@ -13,7 +14,7 @@ const Index = ({
     return (
         <>
             <Head title="Notes" />
-            <Layout user={auth.user} header={<Header auth={auth} />}>
+            <Layout user={auth.user} header={<Header user={auth.user} />}>
                 <div className="py-4">
                     <div className="max-w-screen-2xl mx-auto sm:px-4 lg:px-6">
                         <div className="flex flex-col-reverse gap-12 pb-10 lg:flex-row lg:justify-center xl:gap-x-16">
@@ -82,16 +83,9 @@ const Index = ({
                                                     <div className="text-xl font-medium text-black">
                                                         {note.title}
                                                     </div>
-                                                    {note.tags &&
-                                                        note.tags.map((tag) => (
-                                                            <span
-                                                                key={tag.id}
-                                                                className="inline-flex items-center rounded-md bg-purple-50 px-2 py-1
-                                        text-xs font-medium text-purple-700 ring-1 ring-inset ring-purple-700/10"
-                                                            >
-                                                                {tag.name}
-                                                            </span>
-                                                        ))}
+                                                    <NoteTags
+                                                        tags={note.tags}
+                                                    />
                                                 </div>
                                             </div>
                                         </Link>
