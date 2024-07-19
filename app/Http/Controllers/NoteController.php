@@ -68,6 +68,32 @@ class NoteController extends Controller
         return Inertia::render('Note/Show', ['note' => $note]);
     }
 
+    public function edit(Note $note)
+    {
+        $tags = Tag::all();
+        $noteTagIds = $note->tags->pluck('id')->toArray();
+
+        return Inertia::render('Note/Edit', ['note' => $note, 'noteTagIds' => $noteTagIds, 'tags' => $tags]);
+    }
+
+    public function update(Note $note)
+    {
+        request()->validate([
+            'title' => ['required', 'min:3', 'max:255'],
+            'content' => ['required'],
+            'tags' => ['required', 'array']
+        ]);
+
+        $note->update([
+            'title' => request('title'),
+            'content' => request('content')
+        ]);
+
+        $note->tags()->sync(request('tags'));
+
+        return to_route('notes.show', ['note' => $note]);
+    }
+
     public function destroy(Note $note)
     {
         $note->delete();

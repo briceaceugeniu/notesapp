@@ -1,7 +1,7 @@
 import React from "react";
-import { Head, useForm } from "@inertiajs/react";
+import { Head, router, useForm } from "@inertiajs/react";
 import Layout from "@/Layouts/Layout";
-import { OptionType, PageProps, Tag } from "@/types";
+import { Note, OptionType, PageProps, Tag } from "@/types";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import InputError from "@/Components/InputError";
@@ -9,15 +9,20 @@ import MarkdownEditor from "@uiw/react-markdown-editor";
 import makeAnimated from "react-select/animated";
 import Select from "react-select";
 import PrimaryButton from "@/Components/PrimaryButton";
+import SecondaryButton from "@/Components/SecondaryButton";
 
-const Create = ({ auth, tags }: PageProps<{ tags: Tag[] }>) => {
-    const mdStr = `# This is a H1  \n## This is a H2  \n###### This is a H6`;
+const Edit = ({
+    auth,
+    tags,
+    note,
+    noteTagIds,
+}: PageProps<{ tags: Tag[]; note: Note; noteTagIds: number[] }>) => {
     const animatedComponents = makeAnimated();
 
-    const { data, setData, post, processing, errors, reset } = useForm({
-        title: "",
-        content: mdStr,
-        tags: [],
+    const { data, setData, patch, processing, errors, reset } = useForm({
+        title: note.title,
+        content: note.content,
+        tags: noteTagIds,
     });
 
     const tagsOptions: OptionType[] = tags.map((tag: Tag) => {
@@ -36,7 +41,13 @@ const Create = ({ auth, tags }: PageProps<{ tags: Tag[] }>) => {
 
     const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        post("/notes/create");
+        patch(`/notes/${note.id}`);
+    };
+
+    const goBackClicked = () => {
+        // TODO: check unsaved changes
+
+        router.visit(`/notes/${note.id}`, { method: "get" });
     };
 
     return (
@@ -106,6 +117,14 @@ const Create = ({ auth, tags }: PageProps<{ tags: Tag[] }>) => {
                                     isMulti
                                     className="mt-1"
                                     options={tagsOptions}
+                                    defaultValue={note.tags.map(
+                                        (t): OptionType => {
+                                            return {
+                                                value: t.id,
+                                                label: t.name,
+                                            };
+                                        }
+                                    )}
                                 />
                                 <InputError
                                     message={errors.tags}
@@ -117,8 +136,15 @@ const Create = ({ auth, tags }: PageProps<{ tags: Tag[] }>) => {
                                 type="submit"
                                 className="mt-3"
                             >
-                                Save
+                                Update
                             </PrimaryButton>
+                            <SecondaryButton
+                                type="button"
+                                className="ml-2"
+                                onClick={goBackClicked}
+                            >
+                                Go back
+                            </SecondaryButton>
                         </form>
                     </div>
                 </div>
@@ -127,4 +153,4 @@ const Create = ({ auth, tags }: PageProps<{ tags: Tag[] }>) => {
     );
 };
 
-export default Create;
+export default Edit;
