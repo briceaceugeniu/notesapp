@@ -2,9 +2,7 @@ import React from "react";
 import { Link } from "@inertiajs/react";
 import { User } from "@/types";
 
-const Header = ({ user }: { user: User }) => {
-    console.log(user);
-
+const IndexHeader = ({ user }: { user: User }) => {
     return (
         <div className="flex flex-row justify-between">
             <span>📝</span>
@@ -22,4 +20,4 @@ const Header = ({ user }: { user: User }) => {
     );
 };
 
-export default Header;
+export default IndexHeader;

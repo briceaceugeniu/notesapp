@@ -59,13 +59,20 @@ class NoteController extends Controller
 
         $note->tags()->attach(request('tags'));
 
-        $tags = Tag::all();
-        return to_route('notes.index', ['tags' => $tags]);
+        return to_route('notes.index');
     }
 
     public function show(Note $note)
     {
         $note->tags; // just this make note to have tags attr
         return Inertia::render('Note/Show', ['note' => $note]);
+    }
+
+    public function destroy(Note $note)
+    {
+        $note->delete();
+        $note->tags()->detach();
+
+        return to_route('notes.index');
     }
 }

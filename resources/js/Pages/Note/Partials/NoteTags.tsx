@@ -3,7 +3,7 @@ import { Tag } from "@/types";
 
 const NoteTags = ({ tags }: { tags: Tag[] }) => {
     return (
-        <>
+        <div>
             {tags &&
                 tags.map((tag) => (
                     <span
@@ -14,7 +14,7 @@ const NoteTags = ({ tags }: { tags: Tag[] }) => {
                         {tag.name}
                     </span>
                 ))}
-        </>
+        </div>
     );
 };
 

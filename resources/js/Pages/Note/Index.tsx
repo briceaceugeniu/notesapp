@@ -2,7 +2,7 @@ import React from "react";
 import { Head, Link } from "@inertiajs/react";
 import Layout from "@/Layouts/Layout";
 import { Note, PageProps, Tag } from "@/types";
-import Header from "@/Pages/Note/Partials/Header";
+import IndexHeader from "@/Pages/Note/Partials/IndexHeader";
 import NoteTags from "@/Pages/Note/Partials/NoteTags";
 
 const Index = ({
@@ -14,7 +14,7 @@ const Index = ({
     return (
         <>
             <Head title="Notes" />
-            <Layout user={auth.user} header={<Header user={auth.user} />}>
+            <Layout user={auth.user} header={<IndexHeader user={auth.user} />}>
                 <div className="py-4">
                     <div className="max-w-screen-2xl mx-auto sm:px-4 lg:px-6">
                         <div className="flex flex-col-reverse gap-12 pb-10 lg:flex-row lg:justify-center xl:gap-x-16">
