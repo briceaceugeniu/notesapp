@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Head, Link, useForm } from "@inertiajs/react";
+import { Head, Link, router, useForm } from "@inertiajs/react";
 import Layout from "@/Layouts/Layout";
 import { Note, PageProps, Tag } from "@/types";
 import IndexHeader from "@/Pages/Note/Partials/IndexHeader";
@@ -10,11 +10,17 @@ const Index = ({
     notes,
     tags,
     filterTags,
-}: PageProps<{ tags: Tag[]; notes: Note[]; filterTags: number[] }>) => {
-    const { data, setData, patch, processing, errors, reset } = useForm({
+    filterSearch,
+}: PageProps<{
+    tags: Tag[];
+    notes: Note[];
+    filterTags: number[];
+    filterSearch: string;
+}>) => {
+    const { data, setData, get, processing, errors, reset } = useForm({
         notes: notes,
-        searchTerm: "",
-        filteredTags: []
+        searchTerm: filterSearch,
+        filteredTags: [],
     });
     const [mobileFilter, setMobileFilter] = useState(false);
 
@@ -22,6 +28,12 @@ const Index = ({
         e.preventDefault();
 
         console.log("Submit!");
+    };
+
+    const submitSearch = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        router.get("/notes/", { search: data.searchTerm });
     };
 
     return (
@@ -37,19 +49,26 @@ const Index = ({
                                     style={{ boxShadow: "0 0 10px 10px #fff" }}
                                     className="m-2 sticky top-[10px] self-start min-w-[300px] xl:min-w-[350px]"
                                 >
-                                    <form method="get">
+                                    <form method="get" onSubmit={submitSearch}>
                                         <label
-                                            htmlFor="hs-trailing-button-add-on-with-icon-and-button"
+                                            htmlFor="notes-search"
                                             className="sr-only"
                                         >
                                             Search
                                         </label>
                                         <div className="relative flex rounded-lg shadow-sm">
                                             <input
-                                                required
                                                 type="search"
-                                                id="hs-trailing-button-add-on-with-icon-and-button"
+                                                id="notes-search"
+                                                value={data.searchTerm}
+                                                onChange={(e) =>
+                                                    setData(
+                                                        "searchTerm",
+                                                        e.target.value
+                                                    )
+                                                }
                                                 name="search"
+                                                minLength={3}
                                                 className="py-2 px-4 ps-11 block w-full border-gray-200 shadow-sm rounded-s-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
                                             />
                                             <div className="absolute inset-y-0 start-0 flex items-center pointer-events-none z-20 ps-4">
@@ -74,6 +93,7 @@ const Index = ({
                                                 </svg>
                                             </div>
                                             <button
+                                                disabled={processing}
                                                 type="submit"
                                                 className="py-2 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-e-md border border-transparent bg-indigo-500 text-white hover:bg-indigo-600 disabled:opacity-50 disabled:pointer-events-none"
                                             >

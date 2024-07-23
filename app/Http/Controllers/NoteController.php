@@ -34,7 +34,8 @@ class NoteController extends Controller
         return Inertia::render('Note/Index', [
             'notes' => $notes->items(),
             'tags' => $tags,
-            'filterTags' => array_keys($filterTags)
+            'filterTags' => array_keys($filterTags),
+            'filterSearch' => $filterSearch,
         ]);
     }
 
