@@ -10,6 +10,7 @@ import makeAnimated from "react-select/animated";
 import Select from "react-select";
 import PrimaryButton from "@/Components/PrimaryButton";
 import SecondaryButton from "@/Components/SecondaryButton";
+import { log } from "node:util";
 
 const Edit = ({
     auth,
@@ -44,17 +45,17 @@ const Edit = ({
         patch(`/notes/${note.id}`);
     };
 
-    const goBackClicked = () => {
+    const handlePageLeave = (path: string) => {
         // TODO: check unsaved changes
 
-        router.visit(`/notes/${note.id}`, { method: "get" });
+        router.visit(path, { method: "get" });
     };
 
     return (
         <>
             <Head title="Create Note" />
             <Layout user={auth.user}>
-                <div className="py-4">
+                <div className="p-4">
                     <div className="max-w-screen-2xl mx-auto sm:px-4 lg:px-6">
                         <form onSubmit={submitForm}>
                             {/*Note Title*/}
@@ -85,11 +86,11 @@ const Edit = ({
                                 <InputLabel htmlFor="content" value="Content" />
                                 <MarkdownEditor
                                     className="resize-y mt-1"
-                                    value={data.content}
+                                    value={data.content ?? ""}
                                     height="200px"
-                                    onChange={(value) =>
-                                        setData("content", value)
-                                    }
+                                    onChange={(value) => {
+                                        setData("content", value);
+                                    }}
                                 />
 
                                 <textarea
@@ -141,7 +142,9 @@ const Edit = ({
                             <SecondaryButton
                                 type="button"
                                 className="ml-2"
-                                onClick={goBackClicked}
+                                onClick={() =>
+                                    handlePageLeave(`/notes/${note.id}`)
+                                }
                             >
                                 Go back
                             </SecondaryButton>

@@ -1,5 +1,5 @@
-import React from "react";
-import { Head, Link } from "@inertiajs/react";
+import React, { useState } from "react";
+import { Head, Link, useForm } from "@inertiajs/react";
 import Layout from "@/Layouts/Layout";
 import { Note, PageProps, Tag } from "@/types";
 import IndexHeader from "@/Pages/Note/Partials/IndexHeader";
@@ -11,6 +11,19 @@ const Index = ({
     tags,
     filterTags,
 }: PageProps<{ tags: Tag[]; notes: Note[]; filterTags: number[] }>) => {
+    const { data, setData, patch, processing, errors, reset } = useForm({
+        notes: notes,
+        searchTerm: "",
+        filteredTags: []
+    });
+    const [mobileFilter, setMobileFilter] = useState(false);
+
+    const submitFilter = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        console.log("Submit!");
+    };
+
     return (
         <>
             <Head title="Notes" />
@@ -70,7 +83,7 @@ const Index = ({
                                     </form>
                                 </div>
 
-                                {/*Notes*/}
+                                {/* Notes */}
                                 {notes &&
                                     notes.map((note, index) => (
                                         <Link
@@ -92,6 +105,7 @@ const Index = ({
                                     ))}
                             </div>
 
+                            {/* Filter Notes LG */}
                             <aside
                                 className="xl:sticky xl:top-[10px] xl:self-start xl:min-w-[350px] hidden lg:block"
                                 style={{ flex: "0 1 0" }}
@@ -125,6 +139,103 @@ const Index = ({
                                     </form>
                                 </div>
                             </aside>
+                            <div className="block lg:hidden fixed bottom-8 end-6 z-10 rounded-lg dark:bg-neutral-600">
+                                <button
+                                    onClick={() =>
+                                        setMobileFilter(!mobileFilter)
+                                    }
+                                    className="filter-tags-icon"
+                                >
+                                    <span className="inline-flex justify-center items-center size-[46px] rounded-full bg-indigo-500 text-white dark:bg-indigo-400">
+                                        <svg
+                                            className="flex-shrink-0 size-5"
+                                            height="24"
+                                            version="1.1"
+                                            width="24"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <g transform="translate(0 -1028.4)">
+                                                <path
+                                                    d="m10 11v10l4 3v-13h-4z"
+                                                    fill="#bdc3c7"
+                                                    transform="translate(0 1028.4)"
+                                                />
+                                                <path
+                                                    d="m10 11v10l2 1.5v-11.5h-2z"
+                                                    fill="#95a5a6"
+                                                    transform="translate(0 1028.4)"
+                                                />
+                                                <path
+                                                    d="m1 1028.4 9 11h4l9-11z"
+                                                    fill="#95a5a6"
+                                                />
+                                                <path
+                                                    d="m1 1028.4 9 11h2v-11z"
+                                                    fill="#7f8c8d"
+                                                />
+                                            </g>
+                                        </svg>
+                                    </span>
+                                </button>
+                            </div>
+
+                            {/* Filter Notes SM */}
+                            <div
+                                className={`filter-tags-popup ${
+                                    mobileFilter ? "" : "hidden"
+                                } bg-green-200 top-0 left-0 w-full h-full fixed z-20 flex flex-col`}
+                            >
+                                <header className="flex flex-row items-center justify-between h-10 bg-gray-700 text-white">
+                                    <button
+                                        className="tags-filter-popup-close ml-3"
+                                        onClick={() =>
+                                            setMobileFilter(!mobileFilter)
+                                        }
+                                    >
+                                        X
+                                    </button>
+                                    <label> Tags Filter</label>
+                                    <button className="tags-filter-popup-clear mr-3">
+                                        Clear
+                                    </button>
+                                </header>
+
+                                <div className="flex-1 overflow-y-auto bg-gray-100">
+                                    <form
+                                        id="tags-filter-popup-form"
+                                        className="space-y-2 p-2"
+                                        method="get"
+                                        onSubmit={submitFilter}
+                                    >
+                                        {tags &&
+                                            tags.map((tag: Tag) => (
+                                                <label
+                                                    key={tag.id}
+                                                    htmlFor="tag-filter-{{ $tag->id }}"
+                                                    className="cursor-pointer drop-shadow-sm hover:drop-shadow max-w-xs flex p-3 w-full bg-white border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500"
+                                                >
+                                                    <input
+                                                        // checked={filterTags.includes(tag.id)}
+                                                        type="checkbox"
+                                                        name="tag-filter[{{ $tag->id }}]"
+                                                        className="filter-tag shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+                                                        id="tag-filter-{{ $tag->id }}"
+                                                    />
+                                                    <span className="text-sm text-gray-500 ms-3 dark:text-neutral-400">
+                                                        {tag.name}
+                                                    </span>
+                                                </label>
+                                            ))}
+                                    </form>
+                                </div>
+                                <button
+                                    form="tags-filter-popup-form"
+                                    type="submit"
+                                    className="w-full py-2 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
+                                >
+                                    Apply
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

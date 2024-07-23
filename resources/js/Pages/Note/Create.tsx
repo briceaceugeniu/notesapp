@@ -1,5 +1,5 @@
 import React from "react";
-import { Head, useForm } from "@inertiajs/react";
+import { Head, router, useForm } from "@inertiajs/react";
 import Layout from "@/Layouts/Layout";
 import { OptionType, PageProps, Tag } from "@/types";
 import InputLabel from "@/Components/InputLabel";
@@ -9,6 +9,7 @@ import MarkdownEditor from "@uiw/react-markdown-editor";
 import makeAnimated from "react-select/animated";
 import Select from "react-select";
 import PrimaryButton from "@/Components/PrimaryButton";
+import SecondaryButton from "@/Components/SecondaryButton";
 
 const Create = ({ auth, tags }: PageProps<{ tags: Tag[] }>) => {
     const mdStr = `# This is a H1  \n## This is a H2  \n###### This is a H6`;
@@ -39,11 +40,17 @@ const Create = ({ auth, tags }: PageProps<{ tags: Tag[] }>) => {
         post("/notes/create");
     };
 
+    const handlePageLeave = (path: string) => {
+        // TODO: check unsaved changes
+
+        router.visit(path, { method: "get" });
+    };
+
     return (
         <>
             <Head title="Create Note" />
             <Layout user={auth.user}>
-                <div className="py-4">
+                <div className="p-4">
                     <div className="max-w-screen-2xl mx-auto sm:px-4 lg:px-6">
                         <form onSubmit={submitForm}>
                             {/*Note Title*/}
@@ -119,6 +126,13 @@ const Create = ({ auth, tags }: PageProps<{ tags: Tag[] }>) => {
                             >
                                 Save
                             </PrimaryButton>
+                            <SecondaryButton
+                                type="button"
+                                className="ml-2"
+                                onClick={() => handlePageLeave(`/notes`)}
+                            >
+                                Go back
+                            </SecondaryButton>
                         </form>
                     </div>
                 </div>
