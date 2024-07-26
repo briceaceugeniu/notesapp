@@ -11,7 +11,7 @@ class NoteController extends Controller
 {
     public function index()
     {
-        $filterTags = request('tag-filter', []);
+        $filterTags = request('tagsFilter', []);
         $filterSearch = request('search', "");
 
         $notesQuery = Note::with('tags')->latest();
@@ -19,7 +19,7 @@ class NoteController extends Controller
 
         if (!empty($filterTags)) {
             $notesQuery->whereHas('tags', function ($query) use ($filterTags) {
-                $query->whereIn('tags.id', array_keys($filterTags));
+                $query->whereIn('tags.id', $filterTags);
             });
         }
 

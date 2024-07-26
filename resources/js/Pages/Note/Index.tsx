@@ -9,8 +9,8 @@ const Index = ({
     auth,
     notes,
     tags,
-    filterTags,
     filterSearch,
+    filterTags,
 }: PageProps<{
     tags: Tag[];
     notes: Note[];
@@ -18,22 +18,20 @@ const Index = ({
     filterSearch: string;
 }>) => {
     const { data, setData, get, processing, errors, reset } = useForm({
-        notes: notes,
-        searchTerm: filterSearch,
-        filteredTags: [],
+        search: filterSearch,
+        tagsFilter: filterTags,
     });
     const [mobileFilter, setMobileFilter] = useState(false);
 
-    const submitFilter = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        console.log("Submit!");
+    const submitFilter = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setData("tagsFilter", [1, 2]);
+        get("/notes/", { preserveState: true });
     };
 
     const submitSearch = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        router.get("/notes/", { search: data.searchTerm });
+        get("/notes/");
     };
 
     return (
@@ -60,10 +58,10 @@ const Index = ({
                                             <input
                                                 type="search"
                                                 id="notes-search"
-                                                value={data.searchTerm}
+                                                value={data.search}
                                                 onChange={(e) =>
                                                     setData(
-                                                        "searchTerm",
+                                                        "search",
                                                         e.target.value
                                                     )
                                                 }
@@ -127,28 +125,33 @@ const Index = ({
 
                             {/* Filter Notes LG */}
                             <aside
-                                className="xl:sticky xl:top-[10px] xl:self-start xl:min-w-[350px] hidden lg:block"
+                                className="lg:sticky lg:top-[10px] lg:self-start lg:min-w-[250px] hidden lg:block"
                                 style={{ flex: "0 1 0" }}
                             >
                                 <h3 className="text-2xl dark:text-white mb-4">
                                     Tag Filter
                                 </h3>
-                                <div className="">
-                                    <form method="get">
+                                <div>
+                                    <form method="GET">
                                         <div className="grid space-y-2">
                                             {tags &&
                                                 tags.map((tag: Tag) => (
                                                     <label
                                                         key={tag.id}
-                                                        htmlFor="tag-filter-{{ $tag->id }}"
+                                                        htmlFor={`tag-filter-${tag.id}`}
                                                         className="cursor-pointer drop-shadow-sm hover:drop-shadow max-w-xs flex p-3 w-full bg-white border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500"
                                                     >
                                                         <input
-                                                            // checked={filterTags.includes(tag.id)}
+                                                            checked={data.tagsFilter.includes(
+                                                                tag.id
+                                                            )}
+                                                            onChange={(e) => {
+                                                                submitFilter(e);
+                                                            }}
                                                             type="checkbox"
-                                                            name="tag-filter[{{ $tag->id }}]"
+                                                            name={`tagFilter[${tag.id}]`}
                                                             className="filter-tag shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
-                                                            id="tag-filter-{{ $tag->id }}"
+                                                            id={`tag-filter-${tag.id}`}
                                                         />
                                                         <span className="text-sm text-gray-500 ms-3 dark:text-neutral-400">
                                                             {tag.name}
@@ -225,7 +228,7 @@ const Index = ({
                                         id="tags-filter-popup-form"
                                         className="space-y-2 p-2"
                                         method="get"
-                                        onSubmit={submitFilter}
+                                        // onSubmit={submitFilter}
                                     >
                                         {tags &&
                                             tags.map((tag: Tag) => (
