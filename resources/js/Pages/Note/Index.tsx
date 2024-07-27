@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Head, Link, router, useForm } from "@inertiajs/react";
 import Layout from "@/Layouts/Layout";
 import { Note, PageProps, Tag } from "@/types";
 import IndexHeader from "@/Pages/Note/Partials/IndexHeader";
 import NoteTags from "@/Pages/Note/Partials/NoteTags";
+import SecondaryButton from "@/Components/SecondaryButton";
+import PrimaryButton from "@/Components/PrimaryButton";
 
 const Index = ({
     auth,
@@ -19,13 +21,30 @@ const Index = ({
 }>) => {
     const { data, setData, get, processing, errors, reset } = useForm({
         search: filterSearch,
-        tagsFilter: filterTags,
     });
     const [mobileFilter, setMobileFilter] = useState(false);
+    const [filters, setFilters] = useState<number[]>(filterTags);
 
-    const submitFilter = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setData("tagsFilter", [1, 2]);
-        get("/notes/", { preserveState: true });
+    const submitTagsFilter = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        router.get("/notes/", { filterTags: filters });
+    };
+
+    const changeTagsFilter = (
+        e: React.ChangeEvent<HTMLInputElement>,
+        tagId: number
+    ) => {
+        setFilters((prevFilters) => {
+            let newFilters = [...prevFilters];
+
+            if (e.target.checked) {
+                newFilters.push(tagId);
+            } else {
+                newFilters = newFilters.filter((id) => id !== tagId);
+            }
+            return newFilters;
+        });
     };
 
     const submitSearch = (e: React.FormEvent<HTMLFormElement>) => {
@@ -128,11 +147,34 @@ const Index = ({
                                 className="lg:sticky lg:top-[10px] lg:self-start lg:min-w-[250px] hidden lg:block"
                                 style={{ flex: "0 1 0" }}
                             >
-                                <h3 className="text-2xl dark:text-white mb-4">
-                                    Tag Filter
-                                </h3>
+                                <div className="flex flex-row justify-between">
+                                    <h3 className="text-2xl dark:text-white mb-4">
+                                        Tag Filter
+                                    </h3>
+                                    <div>
+                                        <PrimaryButton
+                                            form="filterTagsForm"
+                                            type="submit"
+                                        >
+                                            Filter
+                                        </PrimaryButton>
+                                        <SecondaryButton
+                                            className="px-2 ml-1"
+                                            onClick={() =>
+                                                router.visit(`/notes`)
+                                            }
+                                        >
+                                            X
+                                        </SecondaryButton>
+                                    </div>
+                                </div>
+
                                 <div>
-                                    <form method="GET">
+                                    <form
+                                        id="filterTagsForm"
+                                        method="GET"
+                                        onSubmit={submitTagsFilter}
+                                    >
                                         <div className="grid space-y-2">
                                             {tags &&
                                                 tags.map((tag: Tag) => (
@@ -142,11 +184,14 @@ const Index = ({
                                                         className="cursor-pointer drop-shadow-sm hover:drop-shadow max-w-xs flex p-3 w-full bg-white border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500"
                                                     >
                                                         <input
-                                                            checked={data.tagsFilter.includes(
+                                                            checked={filters.includes(
                                                                 tag.id
                                                             )}
                                                             onChange={(e) => {
-                                                                submitFilter(e);
+                                                                changeTagsFilter(
+                                                                    e,
+                                                                    tag.id
+                                                                );
                                                             }}
                                                             type="checkbox"
                                                             name={`tagFilter[${tag.id}]`}
@@ -209,40 +254,51 @@ const Index = ({
                                 } bg-green-200 top-0 left-0 w-full h-full fixed z-20 flex flex-col`}
                             >
                                 <header className="flex flex-row items-center justify-between h-10 bg-gray-700 text-white">
-                                    <button
+                                    <PrimaryButton
                                         className="tags-filter-popup-close ml-3"
                                         onClick={() =>
                                             setMobileFilter(!mobileFilter)
                                         }
                                     >
                                         X
-                                    </button>
+                                    </PrimaryButton>
                                     <label> Tags Filter</label>
-                                    <button className="tags-filter-popup-clear mr-3">
+                                    <SecondaryButton
+                                        className="px-2 mr-3"
+                                        onClick={() => router.visit(`/notes`)}
+                                    >
                                         Clear
-                                    </button>
+                                    </SecondaryButton>
                                 </header>
 
                                 <div className="flex-1 overflow-y-auto bg-gray-100">
                                     <form
-                                        id="tags-filter-popup-form"
+                                        id="popupFilterTagsForm"
+                                        method="GET"
+                                        onSubmit={submitTagsFilter}
                                         className="space-y-2 p-2"
-                                        method="get"
-                                        // onSubmit={submitFilter}
                                     >
                                         {tags &&
                                             tags.map((tag: Tag) => (
                                                 <label
                                                     key={tag.id}
-                                                    htmlFor="tag-filter-{{ $tag->id }}"
-                                                    className="cursor-pointer drop-shadow-sm hover:drop-shadow max-w-xs flex p-3 w-full bg-white border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500"
+                                                    htmlFor={`tag-filter-${tag.id}`}
+                                                    className="cursor-pointer drop-shadow-sm hover:drop-shadow flex p-3 w-full bg-white border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500"
                                                 >
                                                     <input
-                                                        // checked={filterTags.includes(tag.id)}
+                                                        checked={filters.includes(
+                                                            tag.id
+                                                        )}
+                                                        onChange={(e) => {
+                                                            changeTagsFilter(
+                                                                e,
+                                                                tag.id
+                                                            );
+                                                        }}
                                                         type="checkbox"
-                                                        name="tag-filter[{{ $tag->id }}]"
+                                                        name={`tagFilter[${tag.id}]`}
                                                         className="filter-tag shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
-                                                        id="tag-filter-{{ $tag->id }}"
+                                                        id={`tag-filter-${tag.id}`}
                                                     />
                                                     <span className="text-sm text-gray-500 ms-3 dark:text-neutral-400">
                                                         {tag.name}
@@ -252,7 +308,7 @@ const Index = ({
                                     </form>
                                 </div>
                                 <button
-                                    form="tags-filter-popup-form"
+                                    form="popupFilterTagsForm"
                                     type="submit"
                                     className="w-full py-2 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
                                 >

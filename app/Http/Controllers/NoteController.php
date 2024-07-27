@@ -11,7 +11,7 @@ class NoteController extends Controller
 {
     public function index()
     {
-        $filterTags = request('tagsFilter', []);
+        $filterTags = request('filterTags', []);
         $filterSearch = request('search', "");
 
         $notesQuery = Note::with('tags')->latest();
@@ -34,7 +34,7 @@ class NoteController extends Controller
         return Inertia::render('Note/Index', [
             'notes' => $notes->items(),
             'tags' => $tags,
-            'filterTags' => array_keys($filterTags),
+            'filterTags' => array_map('intval', $filterTags),
             'filterSearch' => $filterSearch,
         ]);
     }
