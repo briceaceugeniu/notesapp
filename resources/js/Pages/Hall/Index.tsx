@@ -32,9 +32,6 @@ const Index = ({
                                                         project.finishAt) *
                                                         100
                                                 );
-                                                // @ts-ignore
-                                                // @ts-ignore
-                                                // @ts-ignore
                                                 return (
                                                     <div
                                                         key={project.id}
@@ -80,7 +77,6 @@ const Index = ({
 
                                                         {auth && (
                                                             <div className="absolute bottom-0 right-0 pr-1">
-                                                                <a href="{{ route('hall-of-fame') }}/{{ $project->id }}/edit"></a>
                                                                 <Link
                                                                     href={`${route(
                                                                         "hall.edit",
@@ -88,9 +84,7 @@ const Index = ({
                                                                             project:
                                                                                 project.id,
                                                                         }
-                                                                    )}/${
-                                                                        project.id
-                                                                    }/edit`}
+                                                                    )}`}
                                                                 >
                                                                     <span className="inline-flex justify-center items-center size-[24px] rounded-full bg-blue-200 hover:bg-blue-300 text-white dark:bg-blue-500">
                                                                         <svg
@@ -129,7 +123,10 @@ const Index = ({
                                         <div className="my-2">
                                             <h6>Live tracking</h6>
                                             <div className="flex flex-row mt-px">
-                                                <script src="https://tryhackme.com/badge/416226"></script>
+                                                <img
+                                                    src="https://tryhackme-badges.s3.amazonaws.com/Karamasow.png"
+                                                    alt="TryHackMe"
+                                                />
                                             </div>
                                         </div>
 
