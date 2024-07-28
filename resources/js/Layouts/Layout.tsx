@@ -50,8 +50,8 @@ const Layout = ({
                                         Hall of Fame
                                     </NavLink>
                                     <NavLink
-                                        href={route("home")}
-                                        active={route().current("dashboard")}
+                                        href={route("contact")}
+                                        active={route().current("contact")}
                                     >
                                         Contact
                                     </NavLink>

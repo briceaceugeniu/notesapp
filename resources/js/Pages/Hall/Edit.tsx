@@ -131,6 +131,22 @@ const Edit = ({ auth, project }: PageProps<{ project: Project }>) => {
                                     />
                                 </div>
 
+                                <div className="flex flex-row items-center mb-4">
+                                    <TextInput
+                                        id="done"
+                                        type="checkbox"
+                                        className="mr-1 block p-1 w-6 h-6"
+                                        onChange={() =>
+                                            setData("begin", data.finish)
+                                        }
+                                    />
+
+                                    <InputLabel
+                                        htmlFor="done"
+                                        value="Projeckt done!"
+                                    />
+                                </div>
+
                                 <PrimaryButton
                                     disabled={processing}
                                     type="submit"

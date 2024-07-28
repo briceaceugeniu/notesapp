@@ -27,6 +27,9 @@ Route::prefix('hall-of-fame')->controller(ProjectController::class)->group(funct
     Route::patch('/{project}', [ProjectController::class, 'update'])->name('hall.update')->middleware('auth');
 });
 
+Route::get('/contact', function () {
+    return Inertia::render('Contact');
+})->name('contact');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
