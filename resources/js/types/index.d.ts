@@ -25,6 +25,14 @@ export interface OptionType {
     label: string;
 }
 
+export interface Project {
+    id: number;
+    title: string;
+    currentAt: number;
+    finishAt: number;
+    icon: string;
+}
+
 export type PageProps<
     T extends Record<string, unknown> = Record<string, unknown>
 > = T & {

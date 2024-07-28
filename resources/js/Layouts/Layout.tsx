@@ -1,14 +1,20 @@
-import { useState, PropsWithChildren, ReactNode } from 'react';
+import { useState, PropsWithChildren, ReactNode } from "react";
 import NavLink from "@/Components/NavLink";
-import ApplicationLogo from '@/Components/ApplicationLogo';
-import Dropdown from '@/Components/Dropdown';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
-import { Link } from '@inertiajs/react';
-import { User } from '@/types';
+import ApplicationLogo from "@/Components/ApplicationLogo";
+import Dropdown from "@/Components/Dropdown";
+import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
+import { Link } from "@inertiajs/react";
+import { User } from "@/types";
 import assert from "node:assert";
 
-const Layout = ({user, header, children}: PropsWithChildren<{header?: ReactNode, user: User}>) => {
-    const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
+const Layout = ({
+    user,
+    header,
+    children,
+}: PropsWithChildren<{ header?: ReactNode; user: User }>) => {
+    const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(
+        false
+    );
 
     return (
         <div className="min-h-full">
@@ -18,23 +24,35 @@ const Layout = ({user, header, children}: PropsWithChildren<{header?: ReactNode,
                         <div className="flex items-center">
                             <Link href="/">
                                 <div className="flex flex-row flex-shrink-0 items-center unselectable">
-                                    <img className="h-12 w-12" src="/storage/logo.png" alt="app_logo"
-                                         draggable="false"/>
-                                    <h6 className="text-lg ml-3 font-mono font-bold bg-gradient-to-r from-red-600 via-red-300 to-red-700 text-transparent bg-clip-text">briceacnotes</h6>
+                                    <img
+                                        className="h-12 w-12"
+                                        src="/storage/logo.png"
+                                        alt="app_logo"
+                                        draggable="false"
+                                    />
+                                    <h6 className="text-lg ml-3 font-mono font-bold bg-gradient-to-r from-red-600 via-red-300 to-red-700 text-transparent bg-clip-text">
+                                        briceacnotes
+                                    </h6>
                                 </div>
                             </Link>
                             <div className="hidden md:block">
                                 <div className="ml-10 flex items-baseline space-x-4">
                                     <NavLink
-                                        href={route('notes.index')}
-                                        active={route().current('notes.*')}
+                                        href={route("notes.index")}
+                                        active={route().current("notes.*")}
                                     >
                                         Notes
                                     </NavLink>
-                                    <NavLink href={route('home')} active={route().current('dashboard')}>
+                                    <NavLink
+                                        href={route("hall.index")}
+                                        active={route().current("hall.*")}
+                                    >
                                         Hall of Fame
                                     </NavLink>
-                                    <NavLink href={route('home')} active={route().current('dashboard')}>
+                                    <NavLink
+                                        href={route("home")}
+                                        active={route().current("dashboard")}
+                                    >
                                         Contact
                                     </NavLink>
                                 </div>
@@ -49,7 +67,7 @@ const Layout = ({user, header, children}: PropsWithChildren<{header?: ReactNode,
                                             <p>Auth</p>
                                         ) : (
                                             <Link
-                                                href={route('login')}
+                                                href={route("login")}
                                                 className="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
                                             >
                                                 Log in
@@ -60,22 +78,38 @@ const Layout = ({user, header, children}: PropsWithChildren<{header?: ReactNode,
                             </div>
                         </div>
 
-
                         <div className="-me-2 flex items-center sm:hidden">
                             <button
-                                onClick={() => setShowingNavigationDropdown((previousState) => !previousState)}
+                                onClick={() =>
+                                    setShowingNavigationDropdown(
+                                        (previousState) => !previousState
+                                    )
+                                }
                                 className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out"
                             >
-                                <svg className="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                                <svg
+                                    className="h-6 w-6"
+                                    stroke="currentColor"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                >
                                     <path
-                                        className={!showingNavigationDropdown ? 'inline-flex' : 'hidden'}
+                                        className={
+                                            !showingNavigationDropdown
+                                                ? "inline-flex"
+                                                : "hidden"
+                                        }
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
                                         strokeWidth="2"
                                         d="M4 6h16M4 12h16M4 18h16"
                                     />
                                     <path
-                                        className={showingNavigationDropdown ? 'inline-flex' : 'hidden'}
+                                        className={
+                                            showingNavigationDropdown
+                                                ? "inline-flex"
+                                                : "hidden"
+                                        }
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
                                         strokeWidth="2"
@@ -84,22 +118,32 @@ const Layout = ({user, header, children}: PropsWithChildren<{header?: ReactNode,
                                 </svg>
                             </button>
                         </div>
-
                     </div>
                 </div>
 
-                <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
+                <div
+                    className={
+                        (showingNavigationDropdown ? "block" : "hidden") +
+                        " sm:hidden"
+                    }
+                >
                     <div className="flex flex-col items-center justify-between">
                         <ResponsiveNavLink
-                            href={route('notes.index')}
-                            active={route().current('notes.*')}
+                            href={route("notes.index")}
+                            active={route().current("notes.*")}
                         >
                             Notes
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink href={route('home')} active={route().current('dashboard')}>
+                        <ResponsiveNavLink
+                            href={route("home")}
+                            active={route().current("dashboard")}
+                        >
                             Hall of Fame
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink href={route('home')} active={route().current('dashboard')}>
+                        <ResponsiveNavLink
+                            href={route("home")}
+                            active={route().current("dashboard")}
+                        >
                             Contact
                         </ResponsiveNavLink>
                     </div>
@@ -108,7 +152,7 @@ const Layout = ({user, header, children}: PropsWithChildren<{header?: ReactNode,
                             <p>Auth</p>
                         ) : (
                             <Link
-                                href={route('login')}
+                                href={route("login")}
                                 className="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
                             >
                                 Log in
@@ -121,7 +165,9 @@ const Layout = ({user, header, children}: PropsWithChildren<{header?: ReactNode,
             {header && (
                 <header className="bg-gray-100 shadow">
                     <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-6">
-                        <h3 className="text-xl font-bold tracking-tight text-gray-900">{ header }</h3>
+                        <h3 className="text-xl font-bold tracking-tight text-gray-900">
+                            {header}
+                        </h3>
                     </div>
                 </header>
             )}

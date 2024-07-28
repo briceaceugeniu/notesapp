@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\NoteController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -17,6 +18,15 @@ Route::prefix('notes')->controller(NoteController::class)->group(function () {
     Route::patch('/{note}', 'update')->name('notes.update')->middleware('auth');
     Route::delete('/{note}', 'destroy')->name('notes.delete')->middleware('auth');
 });
+
+Route::prefix('hall-of-fame')->controller(ProjectController::class)->group(function () {
+    Route::get('/', [ProjectController::class, 'index'])->name('hall.index');
+    Route::get('/create', [ProjectController::class, 'create'])->name('hall.create')->middleware('auth');
+    Route::post('/create', [ProjectController::class, 'store'])->name('hall.store')->middleware('auth');
+    Route::get('/{project}/edit', [ProjectController::class, 'edit'])->name('hall.edit')->middleware('auth');
+    Route::patch('/{project}', [ProjectController::class, 'update'])->name('hall.update')->middleware('auth');
+});
+
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
