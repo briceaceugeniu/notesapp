@@ -70,7 +70,10 @@ const Edit = ({ auth, project }: PageProps<{ project: Project }>) => {
                                             onChange={(
                                                 e: React.ChangeEvent<HTMLInputElement>
                                             ) =>
-                                                setData("begin", e.target.value)
+                                                setData(
+                                                    "begin",
+                                                    parseInt(e.target.value, 10)
+                                                )
                                             }
                                         />
                                         <InputError
@@ -96,7 +99,7 @@ const Edit = ({ auth, project }: PageProps<{ project: Project }>) => {
                                             ) =>
                                                 setData(
                                                     "finish",
-                                                    e.target.value
+                                                    parseInt(e.target.value, 10)
                                                 )
                                             }
                                         />

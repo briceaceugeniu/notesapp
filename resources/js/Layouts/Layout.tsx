@@ -64,13 +64,15 @@ const Layout = ({
                                 <div className="relative ml-3">
                                     <div>
                                         {user ? (
-                                            <p>Auth</p>
+                                            <Link href={route(`dashboard`)}>
+                                                <span>🔓</span>
+                                            </Link>
                                         ) : (
                                             <Link
                                                 href={route("login")}
                                                 className="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
                                             >
-                                                Log in
+                                                <span>🔐</span>
                                             </Link>
                                         )}
                                     </div>
@@ -135,27 +137,29 @@ const Layout = ({
                             Notes
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
-                            href={route("home")}
-                            active={route().current("dashboard")}
+                            href={route("hall.index")}
+                            active={route().current("hall.*")}
                         >
                             Hall of Fame
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
-                            href={route("home")}
-                            active={route().current("dashboard")}
+                            href={route("contact")}
+                            active={route().current("contact")}
                         >
                             Contact
                         </ResponsiveNavLink>
                     </div>
                     <div className="p-1">
                         {user ? (
-                            <p>Auth</p>
+                            <Link href={route(`dashboard`)}>
+                                <span>🔓</span>
+                            </Link>
                         ) : (
                             <Link
                                 href={route("login")}
                                 className="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
                             >
-                                Log in
+                                <span>🔐</span>
                             </Link>
                         )}
                     </div>
