@@ -31,6 +31,7 @@
     },
     "dependencies": {
         "@uiw/react-markdown-editor": "^6.1.2",
-        "react-select": "^5.8.0"
+        "react-select": "^5.8.0",
+        "react-tooltip": "^5.27.1"
     }
 }

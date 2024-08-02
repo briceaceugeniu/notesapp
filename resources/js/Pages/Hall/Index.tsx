@@ -1,4 +1,5 @@
 import React from "react";
+import { Tooltip as ReactTooltip } from "react-tooltip";
 import { PageProps, Project } from "@/types";
 import { Head, Link } from "@inertiajs/react";
 import Layout from "@/Layouts/Layout";
@@ -142,26 +143,23 @@ const Index = ({
                                                                 key={project.id}
                                                                 className="mr-2 border-double border-4 border-emerald-600 rounded-md bg-emerald-200"
                                                             >
-                                                                <div className="hs-tooltip [--placement:top] inline-block">
-                                                                    <button
-                                                                        type="button"
-                                                                        className="hs-tooltip-toggle"
-                                                                    >
-                                                                        <div className="flex justify-center items-center inline-block size-[46px] text-3xl rounded-lg">
-                                                                            {
-                                                                                project.icon
-                                                                            }
-                                                                            <span
-                                                                                className="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 mb-1 py-1 px-2 bg-gray-900 text-sm font-medium text-white rounded shadow-sm dark:bg-neutral-700"
-                                                                                role="tooltip"
-                                                                            >
-                                                                                {
-                                                                                    project.title
-                                                                                }
-                                                                            </span>
-                                                                        </div>
-                                                                    </button>
+                                                                <div
+                                                                    data-tooltip-id={`my-tooltip-${project.id}`}
+                                                                    className="flex justify-center items-center inline-block size-[46px] text-3xl rounded-lg"
+                                                                >
+                                                                    {
+                                                                        project.icon
+                                                                    }
                                                                 </div>
+
+                                                                <ReactTooltip
+                                                                    id={`my-tooltip-${project.id}`}
+                                                                    place="top"
+                                                                    variant="info"
+                                                                    content={
+                                                                        project.title
+                                                                    }
+                                                                />
                                                             </div>
                                                         );
                                                     })
