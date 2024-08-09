@@ -1,21 +1,32 @@
 import React, { useEffect, useState } from "react";
-import { Head, Link, router, useForm } from "@inertiajs/react";
+import {
+    Head,
+    Link,
+    router,
+    useForm,
+    InertiaLinkProps,
+    usePage,
+} from "@inertiajs/react";
 import Layout from "@/Layouts/Layout";
-import { Note, PageProps, Tag } from "@/types";
+import { Note, PageProps, PaginatedResponse, Tag } from "@/types";
 import IndexHeader from "@/Pages/Note/Partials/IndexHeader";
 import NoteTags from "@/Pages/Note/Partials/NoteTags";
 import SecondaryButton from "@/Components/SecondaryButton";
 import PrimaryButton from "@/Components/PrimaryButton";
+import axios from "axios";
+
+interface NotesProps {
+    notes: PaginatedResponse<Note>;
+}
 
 const Index = ({
     auth,
-    notes,
     tags,
     filterSearch,
     filterTags,
 }: PageProps<{
     tags: Tag[];
-    notes: Note[];
+    notes: any;
     filterTags: number[];
     filterSearch: string;
 }>) => {
@@ -24,6 +35,51 @@ const Index = ({
     });
     const [mobileFilter, setMobileFilter] = useState(false);
     const [filters, setFilters] = useState<number[]>(filterTags);
+    // @ts-ignore
+    const { notes: initialNotes } = usePage<NotesProps>().props;
+    const [notes, setNotes] = useState<Note[]>(initialNotes.data);
+    const [nextPageUrl, setNextPageUrl] = useState<string | null>(
+        initialNotes.next_page_url
+    );
+    const [loading, setLoading] = useState<boolean>(false);
+
+    const loadMore = async () => {
+        if (loading || !nextPageUrl) return;
+
+        setLoading(true);
+
+        try {
+            const response = await axios.get<PaginatedResponse<Note>>(
+                nextPageUrl
+            );
+            setNotes((prevNotes) => [...prevNotes, ...response.data.data]);
+            setNextPageUrl(response.data.next_page_url);
+        } catch (error) {
+            console.error("Error fetching more notes:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleScroll = () => {
+        const scrollTop =
+            document.documentElement.scrollTop || document.body.scrollTop;
+        const scrollHeight =
+            document.documentElement.scrollHeight || document.body.scrollHeight;
+        const clientHeight =
+            document.documentElement.clientHeight || window.innerHeight;
+
+        if (loading || nextPageUrl === null) return;
+
+        if (scrollTop + clientHeight >= scrollHeight - 5) {
+            loadMore();
+        }
+    };
+
+    useEffect(() => {
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, [nextPageUrl, loading]);
 
     const submitTagsFilter = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -122,7 +178,7 @@ const Index = ({
 
                                 {/* Notes */}
                                 {notes &&
-                                    notes.map((note, index) => (
+                                    notes.map((note: Note) => (
                                         <Link
                                             key={note.id}
                                             href={`notes/${note.id}`}
@@ -140,6 +196,8 @@ const Index = ({
                                             </div>
                                         </Link>
                                     ))}
+
+                                {loading && <div>Loading more notes...</div>}
                             </div>
 
                             {/* Filter Notes LG */}

@@ -39,11 +39,11 @@ function Home({ auth }: PageProps) {
                                         think the emojis are funny and cool.
                                     </p>
                                     <div className="my-3">
-                                        <span className="">⚠</span>{" "}
+                                        <span className="mr-1">⚠</span>
                                         <span className="text-gray-500 dark:text-neutral-400 font-mono underline ">
                                             From hier only serious stuff
-                                        </span>{" "}
-                                        <span className="">⚠</span>
+                                        </span>
+                                        <span className="ml-1">⚠</span>
                                     </div>
 
                                     <div className="text-gray-500 dark:text-neutral-400 font-mono">

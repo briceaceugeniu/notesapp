@@ -29,10 +29,14 @@ class NoteController extends Controller
                 ->orWhere('content', 'LIKE', "%$filterSearch%");
         }
 
-        $notes = $notesQuery->simplePaginate(10);
+        $notes = $notesQuery->paginate(10);
+
+        if (request()->wantsJson()) {
+            return response()->json($notes);
+        }
 
         return Inertia::render('Note/Index', [
-            'notes' => $notes->items(),
+            'notes' => $notes,
             'tags' => $tags,
             'filterTags' => array_map('intval', $filterTags),
             'filterSearch' => $filterSearch,
