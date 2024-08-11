@@ -24,12 +24,7 @@ const Layout = ({
                         <div className="flex items-center">
                             <Link href="/">
                                 <div className="flex flex-row flex-shrink-0 items-center unselectable">
-                                    <img
-                                        className="h-12 w-12"
-                                        src="/storage/logo.png"
-                                        alt="app_logo"
-                                        draggable="false"
-                                    />
+                                    <ApplicationLogo className="h-12 w-12" />
                                     <h6 className="text-lg ml-3 font-mono font-bold bg-gradient-to-r from-red-600 via-red-300 to-red-700 text-transparent bg-clip-text">
                                         briceacnotes
                                     </h6>
