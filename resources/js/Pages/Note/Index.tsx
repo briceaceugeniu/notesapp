@@ -14,6 +14,8 @@ import NoteTags from "@/Pages/Note/Partials/NoteTags";
 import SecondaryButton from "@/Components/SecondaryButton";
 import PrimaryButton from "@/Components/PrimaryButton";
 import axios from "axios";
+import FilledStar from "@/Pages/Note/Partials/FilledStar";
+import EmptyStar from "@/Pages/Note/Partials/EmptyStar";
 
 interface NotesProps {
     notes: PaginatedResponse<Note>;
@@ -186,8 +188,17 @@ const Index = ({
                                         >
                                             <div className="p-3 bg-gray-100 rounded shadow-sm hover:shadow-md hover:bg-gray-200">
                                                 <div>
-                                                    <div className="text-xl font-medium text-black">
-                                                        {note.title}
+                                                    <div className="flex flex-row justify-between">
+                                                        <div className="text-xl font-medium text-black">
+                                                            {note.title}
+                                                        </div>
+                                                        <div className="xx">
+                                                            {note.favorite ? (
+                                                                <FilledStar />
+                                                            ) : (
+                                                                <EmptyStar />
+                                                            )}
+                                                        </div>
                                                     </div>
                                                     <NoteTags
                                                         tags={note.tags}

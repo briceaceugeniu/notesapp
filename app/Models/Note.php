@@ -15,7 +15,7 @@ class Note extends Model
 
     public $incrementing = false;
 
-    protected $fillable = ['title', 'content'];
+    protected $fillable = ['title', 'content', 'favorite'];
 
     public function tags(): BelongsToMany
     {

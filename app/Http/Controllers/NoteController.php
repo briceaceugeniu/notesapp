@@ -6,6 +6,7 @@ use App\Models\Note;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use JetBrains\PhpStorm\NoReturn;
 
 class NoteController extends Controller
 {
@@ -97,6 +98,23 @@ class NoteController extends Controller
         $note->tags()->sync(request('tags'));
 
         return to_route('notes.show', ['note' => $note]);
+    }
+
+    public function toggleFavorite(Note $note)
+    {
+        request()->validate([
+            'favorite' => 'boolean',
+        ]);
+
+        $note->update([
+            'favorite' => !$note->favorite
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Note favorite status updated!',
+            'favorite' => $note->favorite
+        ]);
     }
 
     public function destroy(Note $note)

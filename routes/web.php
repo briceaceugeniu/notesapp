@@ -11,6 +11,7 @@ Route::get('/', function () {
 
 Route::prefix('notes')->controller(NoteController::class)->group(function () {
     Route::get('/', 'index')->name('notes.index');
+    Route::patch('/{note}/favorite', 'toggleFavorite')->name('notes.favorite')->middleware('auth');
     Route::get('/create', 'create')->name('notes.create')->middleware('auth');
     Route::post('/create', 'store')->name('notes.store')->middleware('auth');
     Route::get('/{note}', 'show')->name('notes.show');
