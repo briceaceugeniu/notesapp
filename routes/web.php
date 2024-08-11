@@ -1,13 +1,13 @@
 <?php
+
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NoteController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Home');
-})->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::prefix('notes')->controller(NoteController::class)->group(function () {
     Route::get('/', 'index')->name('notes.index');
@@ -21,11 +21,11 @@ Route::prefix('notes')->controller(NoteController::class)->group(function () {
 });
 
 Route::prefix('hall-of-fame')->controller(ProjectController::class)->group(function () {
-    Route::get('/', [ProjectController::class, 'index'])->name('hall.index');
-    Route::get('/create', [ProjectController::class, 'create'])->name('hall.create')->middleware('auth');
-    Route::post('/create', [ProjectController::class, 'store'])->name('hall.store')->middleware('auth');
-    Route::get('/{project}/edit', [ProjectController::class, 'edit'])->name('hall.edit')->middleware('auth');
-    Route::patch('/{project}', [ProjectController::class, 'update'])->name('hall.update')->middleware('auth');
+    Route::get('/', 'index')->name('hall.index');
+    Route::get('/create', 'create')->name('hall.create')->middleware('auth');
+    Route::post('/create', 'store')->name('hall.store')->middleware('auth');
+    Route::get('/{project}/edit', 'edit')->name('hall.edit')->middleware('auth');
+    Route::patch('/{project}', 'update')->name('hall.update')->middleware('auth');
 });
 
 Route::get('/contact', function () {

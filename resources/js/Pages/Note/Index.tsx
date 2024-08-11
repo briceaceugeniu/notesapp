@@ -192,7 +192,7 @@ const Index = ({
                                                         <div className="text-xl font-medium text-black">
                                                             {note.title}
                                                         </div>
-                                                        <div className="xx">
+                                                        <div>
                                                             {note.favorite ? (
                                                                 <FilledStar />
                                                             ) : (

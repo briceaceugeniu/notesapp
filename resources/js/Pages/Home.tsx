@@ -1,16 +1,20 @@
-import { Head } from "@inertiajs/react";
+import { Head, Link } from "@inertiajs/react";
 import Layout from "@/Layouts/Layout";
-import { PageProps } from "@/types";
+import { Note, PageProps } from "@/types";
 import GreetingText from "@/Components/GreetingText";
-import { useState } from "react";
+import React, { useState } from "react";
+import FilledStar from "@/Pages/Note/Partials/FilledStar";
+import EmptyStar from "@/Pages/Note/Partials/EmptyStar";
+import NoteTags from "@/Pages/Note/Partials/NoteTags";
 
-function Home({ auth }: PageProps) {
+function Home({ auth, favoriteNotes }: PageProps<{ favoriteNotes: Note[] }>) {
     const [showContent, setShowContent] = useState(false);
 
     function handleShowContent() {
         setShowContent(!showContent);
     }
 
+    console.log(favoriteNotes);
     return (
         <>
             <Head title="Home" />
@@ -131,10 +135,40 @@ function Home({ auth }: PageProps) {
                             {/*Favorite Notes*/}
                             <div className="row-span-1 sm:row-span-1 md:row-span-2 col-span-1 sm:col-span-2 md:col-span-2 p-2 shadow bg-ct2">
                                 <h4 className="text-lg font-mono font-bold">
-                                    Favorite Notes (will come soon)
+                                    Favorite Notes
                                 </h4>
                                 <div className="text-gray-500 dark:text-neutral-400 font-mono">
-                                    Your advertisement could be placed here!
+                                    {favoriteNotes &&
+                                        favoriteNotes.map((note: Note) => (
+                                            <>
+                                                <Link
+                                                    key={note.id}
+                                                    href={`notes/${note.id}`}
+                                                    className="block m-2"
+                                                >
+                                                    <div className="p-3 bg-gray-100 rounded shadow-sm hover:shadow-md hover:bg-gray-200">
+                                                        <div>
+                                                            <div className="flex flex-row justify-between">
+                                                                <div className="text-xl font-medium text-black">
+                                                                    {note.title}
+                                                                </div>
+                                                                <div>
+                                                                    {note.favorite ? (
+                                                                        <FilledStar />
+                                                                    ) : (
+                                                                        <EmptyStar />
+                                                                    )}
+                                                                </div>
+                                                            </div>
+                                                            <NoteTags
+                                                                tags={note.tags}
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </Link>
+                                                <hr />
+                                            </>
+                                        ))}
                                 </div>
                             </div>
                         </div>
