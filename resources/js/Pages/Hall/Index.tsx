@@ -21,7 +21,7 @@ const Index = ({
                     <div className="max-w-screen-2xl mx-auto sm:px-4 lg:px-6">
                         <div className="container mx-auto mt-3">
                             <div className="flex flex-col">
-                                <div className="max-h-72 shadow p-2 pt-0 overflow-auto bg-ct2">
+                                <div className="max-h-[40vh] shadow p-2 pt-0 overflow-auto bg-ct2">
                                     <h4 className="text-lg font-mono font-bold top-0 z-20 sticky bg-ct1 shadow-ct1">
                                         Things started and not (yet) finished :(
                                     </h4>
@@ -76,7 +76,7 @@ const Index = ({
                                                             </div>
                                                         </div>
 
-                                                        {auth && (
+                                                        {auth.user && (
                                                             <div className="absolute bottom-0 right-0 pr-1">
                                                                 <Link
                                                                     href={`${route(
