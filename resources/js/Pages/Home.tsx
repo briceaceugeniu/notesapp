@@ -19,7 +19,7 @@ function Home({ auth }: PageProps) {
                     <div className="max-w-screen-2xl mx-auto sm:px-4 lg:px-6">
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-rows-3 lg:grid-flow-col gap-4 lg:h-80vh">
                             {/*About me*/}
-                            <div className="row-span-1 sm:row-span-1 md:row-span-3 p-2 shadow bg-ct2">
+                            <div className="row-span-1 sm:row-span-1 md:row-span-3 p-2 shadow bg-ct2 overflow-auto custom-scrollbar">
                                 <h4 className="text-lg font-mono font-bold">
                                     About me 😊
                                 </h4>
