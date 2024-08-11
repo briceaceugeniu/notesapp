@@ -35,8 +35,14 @@ function Home({ auth }: PageProps) {
                                     }`}
                                 >
                                     <p className="text-gray-500 dark:text-neutral-400 font-mono">
-                                        As you've probably already realised, I
-                                        think the emojis are funny and cool.
+                                        My main area of expertise is web
+                                        development (full stack) and I also have
+                                        some C#/WPF professional experience.
+                                    </p>
+                                    <p className="text-gray-500 dark:text-neutral-400 font-mono">
+                                        Also, as you've probably already
+                                        realised, I think emojis are funny and
+                                        cool.
                                     </p>
                                     <div className="my-3">
                                         <span className="mr-1">⚠</span>
@@ -53,6 +59,7 @@ function Home({ auth }: PageProps) {
                                             <li>
                                                 HTML, CSS, JavaScript, React
                                             </li>
+                                            <li>C#/.NET - WPF</li>
                                             <li>MySQL, MSSQL(a little bit)</li>
                                             <li>Git, Docker</li>
                                         </ul>
