@@ -31,6 +31,7 @@ export interface Project {
     currentAt: number;
     finishAt: number;
     icon: string;
+    updated_at: string;
 }
 
 export interface PaginatedResponse<T> {

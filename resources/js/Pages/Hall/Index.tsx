@@ -4,6 +4,8 @@ import { PageProps, Project } from "@/types";
 import { Head, Link } from "@inertiajs/react";
 import Layout from "@/Layouts/Layout";
 import HallIndexHeader from "@/Pages/Hall/Partials/HallIndexHeader";
+import InProgressProject from "@/Pages/Hall/Partials/InProgressProject";
+import TryHackMeLiveTracking from "@/Pages/Hall/Partials/TryHackMeLiveTracking";
 
 const Index = ({
     auth,
@@ -26,89 +28,17 @@ const Index = ({
                                         Things started and not (yet) finished :(
                                     </h4>
                                     <div className="lg:mx-16 mt-2 p-1">
-                                        {inProgress ? (
-                                            inProgress.map((project) => {
-                                                const percentage = Math.round(
-                                                    (project.currentAt /
-                                                        project.finishAt) *
-                                                        100
-                                                );
-                                                return (
-                                                    <div
-                                                        key={project.id}
-                                                        className="flex flex-row relative my-2 p-2 border-dashed border-4 border-indigo-500/50 rounded"
-                                                    >
-                                                        <div className="mr-2">
-                                                            <div className="flex justify-center items-center inline-block size-[46px] text-3xl rounded-lg">
-                                                                {project.icon}
-                                                            </div>
-                                                        </div>
-
-                                                        <div className="w-full">
-                                                            <div className="mb-2 flex justify-between items-center">
-                                                                <h3 className="text-sm font-semibold text-gray-800 dark:text-white">
-                                                                    {
-                                                                        project.title
-                                                                    }
-                                                                </h3>
-                                                                <span className="text-sm text-gray-800 dark:text-white">
-                                                                    {percentage}
-                                                                    %
-                                                                </span>
-                                                            </div>
-
-                                                            {/*@ts-ignore*/}
-                                                            <div
-                                                                className="flex w-full h-2 bg-gray-200 rounded-full overflow-hidden dark:bg-neutral-700"
-                                                                role="progressbar"
-                                                                aria-valuenow={
-                                                                    percentage
-                                                                }
-                                                                aria-valuemin="0"
-                                                                aria-valuemax="100"
-                                                            >
-                                                                <div
-                                                                    className="flex flex-col justify-center rounded-full overflow-hidden bg-blue-600 text-xs text-white text-center whitespace-nowrap transition duration-500 dark:bg-blue-500"
-                                                                    style={{
-                                                                        width: `${percentage}%`,
-                                                                    }}
-                                                                ></div>
-                                                            </div>
-                                                        </div>
-
-                                                        {auth.user && (
-                                                            <div className="absolute bottom-0 right-0 pr-1">
-                                                                <Link
-                                                                    href={`${route(
-                                                                        "hall.edit",
-                                                                        {
-                                                                            project:
-                                                                                project.id,
-                                                                        }
-                                                                    )}`}
-                                                                >
-                                                                    <span className="inline-flex justify-center items-center size-[24px] rounded-full bg-blue-200 hover:bg-blue-300 text-white dark:bg-blue-500">
-                                                                        <svg
-                                                                            xmlns="http://www.w3.org/2000/svg"
-                                                                            viewBox="0 0 24 24"
-                                                                            width="18"
-                                                                            height="18"
-                                                                            fill="none"
-                                                                            stroke="currentColor"
-                                                                            strokeWidth="2"
-                                                                            strokeLinecap="round"
-                                                                            strokeLinejoin="round"
-                                                                        >
-                                                                            <path d="M12 20h9" />
-                                                                            <path d="M18.36 2.64a2.5 2.5 0 0 1 3.54 3.54l-12 12L3 21l2.82-6.82z" />
-                                                                        </svg>
-                                                                    </span>
-                                                                </Link>
-                                                            </div>
-                                                        )}
+                                        {inProgress && inProgress.length > 0 ? (
+                                            inProgress.map(
+                                                (project: Project) => (
+                                                    <div key={project.id}>
+                                                        <InProgressProject
+                                                            user={auth.user}
+                                                            project={project}
+                                                        />
                                                     </div>
-                                                );
-                                            })
+                                                )
+                                            )
                                         ) : (
                                             <div className="mono">Empty..</div>
                                         )}
@@ -123,12 +53,7 @@ const Index = ({
 
                                         <div className="my-2">
                                             <h6>Live tracking</h6>
-                                            <div className="flex flex-row mt-px">
-                                                <img
-                                                    src="https://tryhackme-badges.s3.amazonaws.com/Karamasow.png"
-                                                    alt="TryHackMe"
-                                                />
-                                            </div>
+                                            <TryHackMeLiveTracking />
                                         </div>
 
                                         <hr />

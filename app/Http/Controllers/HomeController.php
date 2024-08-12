@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Note;
+use App\Models\Project;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -17,9 +18,12 @@ class HomeController extends Controller
             ->with('tags:id,name')
             ->get();
 
+        $lastActivity = Project::orderBy('updated_at', 'desc')
+            ->first();
+
         return Inertia::render('Home', [
             'favoriteNotes' => $favorites ?? [],
-            'lastActivities' => [],
+            'lastActivity' => $lastActivity,
         ]);
     }
 }

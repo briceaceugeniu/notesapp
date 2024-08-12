@@ -1,15 +1,19 @@
 import { Head, Link } from "@inertiajs/react";
 import Layout from "@/Layouts/Layout";
-import { Note, PageProps } from "@/types";
+import { Note, PageProps, Project } from "@/types";
 import GreetingText from "@/Components/GreetingText";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import FilledStar from "@/Pages/Note/Partials/FilledStar";
 import EmptyStar from "@/Pages/Note/Partials/EmptyStar";
 import NoteTags from "@/Pages/Note/Partials/NoteTags";
 import CurrentProjectArea from "@/Components/CurrentProjectArea";
 import AboutMe from "@/Components/AboutMe";
 
-function Home({ auth, favoriteNotes }: PageProps<{ favoriteNotes: Note[] }>) {
+function Home({
+    auth,
+    favoriteNotes,
+    lastActivity,
+}: PageProps<{ favoriteNotes: Note[]; lastActivity: Project }>) {
     return (
         <>
             <Head title="Home" />
@@ -21,7 +25,10 @@ function Home({ auth, favoriteNotes }: PageProps<{ favoriteNotes: Note[] }>) {
                             <AboutMe className="row-span-1 sm:row-span-1 md:row-span-3" />
 
                             {/*Current project / Success*/}
-                            <CurrentProjectArea className="col-span-1 sm:col-span-1 md:col-span-2" />
+                            <CurrentProjectArea
+                                lastActivity={lastActivity}
+                                cls="col-span-1 sm:col-span-1 md:col-span-2"
+                            />
 
                             {/*Favorite Notes*/}
                             <div className="row-span-1 sm:row-span-1 md:row-span-2 col-span-1 sm:col-span-2 md:col-span-2 p-2 shadow bg-ct2">
