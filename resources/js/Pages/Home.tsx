@@ -27,7 +27,7 @@ function Home({
                             {/*Current project / Success*/}
                             <CurrentProjectArea
                                 lastActivity={lastActivity}
-                                cls="col-span-1 sm:col-span-1 md:col-span-2"
+                                cls="col-span-1 sm:col-span-1 md:col-span-2 min-h-44"
                             />
 
                             {/*Favorite Notes*/}
