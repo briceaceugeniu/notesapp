@@ -2,18 +2,18 @@ import React from "react";
 
 const GutHubLink = () => {
     return (
-        <div className="w-fit mt-2">
+        <div className="w-fit m-2 flex shadow grayscale hover:grayscale-0 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110">
             <a
                 href="https://github.com/briceaceugeniu/notesapp"
                 target="_blank"
-                className="p-2"
+                className="p-2 "
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     x="0px"
                     y="0px"
-                    width="45"
-                    height="45"
+                    width="50"
+                    height="50"
                     viewBox="0 0 100 100"
                 >
                     <path

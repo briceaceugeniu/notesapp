@@ -5,7 +5,12 @@ import { User } from "@/types";
 const HallIndexHeader = ({ user }: { user: User }) => {
     return (
         <div className="flex flex-row justify-between">
-            <span className="font-mono">...and Shame!</span>
+            <div>
+                <div className="font-mono inline-block sm:hidden">
+                    Hall of Fame..
+                </div>
+                <div className="font-mono">..and Shame!</div>
+            </div>
             {user ? (
                 <Link
                     href={route("hall.create")}

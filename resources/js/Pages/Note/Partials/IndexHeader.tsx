@@ -5,7 +5,12 @@ import { User } from "@/types";
 const IndexHeader = ({ user }: { user: User }) => {
     return (
         <div className="flex flex-row justify-between">
-            <span>📝</span>
+            <span>
+                📝
+                <span className="font-mono ml-2 inline-block sm:hidden">
+                    Notes
+                </span>
+            </span>
             {user ? (
                 <Link
                     href={route("notes.create")}

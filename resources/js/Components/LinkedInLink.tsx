@@ -2,10 +2,11 @@ import React from "react";
 
 const LinkedInLink = () => {
     return (
-        <div className="w-fit mt-2">
+        <div className="w-fit m-2 flex shadow grayscale hover:grayscale-0 transition ease-in-out delay-100 hover:-translate-y-1 hover:scale-110">
             <a
                 href="https://www.linkedin.com/in/briceac-eugeniu-11b605315"
                 target="_blank"
+                className="p-2"
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
