@@ -122,7 +122,7 @@ const Index = ({
                                 {/*Search Note*/}
                                 <div
                                     style={{ boxShadow: "0 0 10px 10px #fff" }}
-                                    className="m-2 sticky top-[10px] self-start min-w-[300px] xl:min-w-[350px]"
+                                    className="m-2 sticky top-[10px] self-start min-w-[300px] xl:min-w-[350px] z-20"
                                 >
                                     <form method="get" onSubmit={submitSearch}>
                                         <label
@@ -144,9 +144,9 @@ const Index = ({
                                                 }
                                                 name="search"
                                                 minLength={3}
-                                                className="py-2 px-4 ps-11 block w-full border-gray-200 shadow-sm rounded-s-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+                                                className="py-2 px-4 ps-11 block w-full border-gray-200 shadow-sm rounded-s-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
                                             />
-                                            <div className="absolute inset-y-0 start-0 flex items-center pointer-events-none z-20 ps-4">
+                                            <div className="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-4">
                                                 <svg
                                                     className="flex-shrink-0 size-4 text-gray-400 dark:text-neutral-500"
                                                     xmlns="http://www.w3.org/2000/svg"
