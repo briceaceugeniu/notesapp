@@ -5,7 +5,7 @@ const ShowHeader = ({ note }: { note: Note }) => {
     return (
         <div>
             <span>
-                Note: <i>{note.title}</i>
+                Note: <code>[ {note.title} ]</code>
             </span>
         </div>
     );

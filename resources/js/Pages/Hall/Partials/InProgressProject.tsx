@@ -26,7 +26,7 @@ const InProgressProject = ({
                     </h3>
                     <span className="text-sm text-gray-800 dark:text-white">
                         <span className="text-xs font-mono mr-3">
-                            [last updated {timeSince(project.updated_at)}]
+                            [updated: {timeSince(project.updated_at)}]
                         </span>
                         <span className="font-bold">{percentage}%</span>
                     </span>

@@ -87,7 +87,8 @@ const Edit = ({
                                 <MarkdownEditor
                                     className="resize-y mt-1"
                                     value={data.content ?? ""}
-                                    height="200px"
+                                    minHeight="200px"
+                                    maxHeight="60vh"
                                     onChange={(value) => {
                                         setData("content", value);
                                     }}
