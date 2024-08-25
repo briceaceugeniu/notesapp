@@ -26,7 +26,7 @@ const Create = ({ auth }: PageProps) => {
         <>
             <Head title="Create Project" />
             <Layout user={auth.user} header={<span>Create new Project</span>}>
-                <div className="py-4">
+                <div>
                     <div className="max-w-screen-2xl mx-auto sm:px-4 lg:px-6">
                         <div className="container mx-auto p-2">
                             <form method="POST" onSubmit={submitProject}>

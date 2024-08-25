@@ -115,7 +115,7 @@ const Index = ({
         <>
             <Head title="Notes" />
             <Layout user={auth.user} header={<IndexHeader user={auth.user} />}>
-                <div className="py-4">
+                <div>
                     <div className="max-w-screen-2xl mx-auto sm:px-4 lg:px-6">
                         <div className="flex flex-col-reverse gap-12 pb-10 lg:flex-row lg:justify-center xl:gap-x-16">
                             <div className="flex-1">
@@ -216,8 +216,8 @@ const Index = ({
                                 className="lg:sticky lg:top-[10px] lg:self-start lg:min-w-[250px] hidden lg:block"
                                 style={{ flex: "0 1 0" }}
                             >
-                                <div className="flex flex-row justify-between">
-                                    <h3 className="text-2xl dark:text-white mb-4">
+                                <div className="flex flex-row justify-between m-2">
+                                    <h3 className="text-2xl dark:text-white">
                                         Tag Filter
                                     </h3>
                                     <div>

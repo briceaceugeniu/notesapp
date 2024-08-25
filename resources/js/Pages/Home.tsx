@@ -18,7 +18,7 @@ function Home({
         <>
             <Head title="Home" />
             <Layout user={auth.user} header={<GreetingText />}>
-                <div className="py-4">
+                <div className="py-2">
                     <div className="max-w-screen-2xl mx-auto sm:px-4 lg:px-6">
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-rows-3 lg:grid-flow-col gap-4 lg:h-80vh">
                             {/*About me*/}

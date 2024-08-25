@@ -19,11 +19,11 @@ const Index = ({
                 user={auth.user}
                 header={<HallIndexHeader user={auth.user} />}
             >
-                <div className="py-4">
+                <div>
                     <div className="max-w-screen-2xl mx-auto sm:px-4 lg:px-6">
                         <div className="container mx-auto mt-3">
                             <div className="flex flex-col">
-                                <div className="max-h-[40vh] shadow p-2 pt-0 overflow-auto custom-scrollbar bg-ct2">
+                                <div className="max-h-[40vh] md:max-h-[50vh] lg:max-h-[40vh] shadow p-2 pt-0 overflow-auto custom-scrollbar bg-ct2">
                                     <h4 className="text-lg font-mono font-bold top-0 z-20 sticky bg-ct1 shadow-ct1">
                                         Things started and not (yet) finished :(
                                     </h4>

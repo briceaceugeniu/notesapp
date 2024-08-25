@@ -32,7 +32,7 @@ const Contact = ({ auth }: PageProps) => {
                     </span>
                 }
             >
-                <div className="py-4">
+                <div className="py-2">
                     <div className="max-w-screen-2xl mx-auto sm:px-4 lg:px-6">
                         <div className="flex flex-row ">
                             <span className="shadow p-2 rounded min-w-[278px]">
