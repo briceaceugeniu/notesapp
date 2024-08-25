@@ -49,7 +49,7 @@ const Show = ({ auth, note }: PageProps<{ note: Note }>) => {
             <Head title={note.title} />
             <Layout user={auth.user} header={<ShowHeader note={note} />}>
                 <div className="py-4 shadow p-2 bg-ct2">
-                    <div className="flex flex-row justify-between mb-2">
+                    <div className="flex flex-row justify-between mb-2 sm:mx-5">
                         <SecondaryButton
                             type="button"
                             className="h-7"

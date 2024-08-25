@@ -155,7 +155,7 @@ const Edit = ({ auth, project }: PageProps<{ project: Project }>) => {
                                     type="submit"
                                     className="mt-3"
                                 >
-                                    Save
+                                    Update
                                 </PrimaryButton>
                                 <SecondaryButton
                                     type="button"
